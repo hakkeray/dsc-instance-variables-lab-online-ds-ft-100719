@@ -33,10 +33,14 @@ Next, instantiate a new instance of a passenger and a new instance of a driver. 
 
 
 ```python
-driver = None # assign a driver instance
+driver = Driver() # assign a driver instance
 # give the driver instance object 'miles_driven' of 100000
-passenger = None # assign the passenger instance
+
+driver.miles_driven = 100000
+
+passenger = Passenger() # assign the passenger instance
 # give the passenger instance object a 'rating' of 4.9
+passenger.rating = 4.9
 ```
 
 Your next challenge is to build a function to find a driver with a given name. The function should take two inputs: drivers and search_name. Drivers will be a list of driver objects (instances of the class you defined above) and search_name will be a string for the driver name you wish to search from. The function should then return the first driver object from drivers whose name is an exact match to the search name. If there is no driver that matches the name searched for, then the function should return `None` and print a string stating "Sorry we couldn't find a driver with the name, ____! :\(" For example, if there were no results for the search name "Jack" your function should return None and print:
@@ -49,7 +53,11 @@ Your next challenge is to build a function to find a driver with a given name. T
 ```python
 def find_driver_by_name(drivers, name):
     # write your code here
-    pass
+    for driver in drivers:
+        if driver.name  == name:
+            return driver
+    print("Sorry we couldn't find a driver with the name, {}! :(".format(name))
+    return None
 ```
 
 
@@ -80,7 +88,7 @@ output
 
 
 
-    <__main__.Driver at 0x109d976a0>
+    <__main__.Driver at 0x10d451048>
 
 
 
@@ -93,7 +101,7 @@ output
 
 
 
-    <__main__.Driver at 0x109d97630>
+    <__main__.Driver at 0x10d451710>
 
 
 
@@ -116,7 +124,12 @@ While perhaps moderately useful, the function as written is rather brittle. Miss
 # write your method here that returns the list of 
 # drivers whose name starts which the given substring
 def name_starts_with(drivers, substring):
-    pass
+    starts_with_a = []
+    for driver in drivers:
+        if substring in driver.name:
+            starts_with_a.append(driver)
+    
+    return starts_with_a
 ```
 
 Finally, define a method that returns the driver with the highest rating.
@@ -125,7 +138,15 @@ Finally, define a method that returns the driver with the highest rating.
 ```python
 # write your method here that returns the driver with the highest rating
 def highest_rated_driver(drivers):
-    pass
+    highest_rating = drivers[0].rating
+    best_driver = drivers[0]
+    
+    for driver in drivers:
+        if driver.rating > highest_rating:
+            best_driver = driver
+            highest_rating = driver.rating
+    
+    return best_driver
 ```
 
 ## Bonus
@@ -134,7 +155,13 @@ Define a `NewDriver` class with an instance method called, `passenger_names`. Th
 
 
 ```python
-# Your code here!
+class NewDriver:
+    
+    def passenger_names(self):
+        names = []
+        for passenger in self.passengers:
+            names.append(passenger.name)
+        return names
 ```
 
 
@@ -152,12 +179,17 @@ list_of_passengers =  [alex_passenger, michelle_passenger, jake_passenger, ashle
 
 
 ```python
-best_driver = None # instantiate a NewDriver instance object
+best_driver = NewDriver() # instantiate a NewDriver instance object
 # add the name attribute and assign it 'Garol'
+best_driver.name = 'Garol'
 # add the car_make attribute and assign it 'toyota'
+best_driver.car_make = 'toyota'
 # add the car_model attribute and assign it 'camry'
+best_driver.car_model = 'camry'
 # add the age attribute and assign it '30'
+best_driver.age = '30'
 # add the passengers attribute and assign it to the list_of_passengers
+best_driver.passengers = list_of_passengers
 ```
 
 Alright, great! Now you have some attributes on the driver that you can work with. Create an instance method in the NewDriver class called `passenger_names` which returns a list of all the passengers' names/
@@ -165,7 +197,7 @@ Your output should look like `['alex', 'michelle', 'jake', 'ashleigh']`.
 
 
 ```python
-names_of_passengers = None # assign the return of best_driver.passenger_names()
+names_of_passengers = best_driver.passenger_names() # assign the return of best_driver.passenger_names()
 print(names_of_passengers)
 ```
 
